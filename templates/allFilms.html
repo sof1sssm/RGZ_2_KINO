@@ -1,0 +1,26 @@
+{% extends "base_cinema.html" %}
+
+{% block header %}
+<div style="position: absolute; right: 40px;">
+    {{current_user.name}}
+</div>
+<h1>Афиша</h1>
+<div style="position: absolute; right: 40px; top: 90px; ">
+    <a style="color: white; text-decoration: none;" href="/cinema">Главная страница</a>
+</div>
+{% endblock %}
+
+{% block main %}
+    {% for session in movie_sessions %}
+        <div style="margin-top: 50px; 
+                    padding: 10px; 
+                    border: 4px dashed  deeppink;
+                    border-right-style: none;
+                    border-left-style: none;
+                    padding-top: 30px;
+                    padding-bottom:30px ;">
+            <a class="glav" style="border:0;" href="{{ url_for('movie_sessions', movie=session.movie)}}">{{ session.movie }}</a>
+        </div><br>
+    {% endfor %}
+    <div style="margin-top: 50px;"><a class="knopka"  href="/cinema">Назад</a></div><br>
+{% endblock %}

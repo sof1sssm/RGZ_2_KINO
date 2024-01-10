@@ -1,0 +1,43 @@
+{% extends "base_cinema.html" %}
+
+{% block header %}
+<div style="position: absolute; right: 40px;">
+    {{current_user.name}}
+</div>
+<h1>Сеансы фильма: {{ movie }}</h1>
+<div style="position: absolute; right: 40px; top: 90px; ">
+    <a style="color: white; text-decoration: none;" href="/cinema">Главная страница</a>
+</div>
+{% endblock %}
+
+{% block main %}
+  <h2></h2>
+  <ul>
+    {% for session in sessions %}
+    <div style="margin-top: 50px; 
+                padding: 10px; 
+                border: 4px dashed  deeppink;
+                border-right-style: none;
+                border-left-style: none;
+                padding-top: 30px;
+                padding-bottom:30px ;">
+      <a style="text-decoration: none;
+                font-size: 20px;
+                color: deeppink;
+                font-weight: bold;" 
+      href="{{ url_for('session_details', session_id=session.session_id) }}">
+          Время: {{ session.start_time }}<br> Зал: {{ session.room_number }}
+      </a>
+      {% if current_user.username=='admin' %}  
+      <form method="POST" action="/cinema/movieSessions/{{ movie }}/deleteSessions">
+          <input type="hidden" name="session_delete" value="{{ session.session_id }}">
+          <br>
+          <button style="background-color: white;" type="submit">Удалить сеанс</button>
+      </form>
+      {% endif %}
+    </div>
+    <br>
+    {% endfor %}
+  </ul>
+  <div style="margin-top: 50px;"><a class="knopka"  href="/cinema/all_sessions">Назад</a></div><br>
+{% endblock %}

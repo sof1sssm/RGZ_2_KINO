@@ -1,0 +1,170 @@
+{% extends "base_cinema.html" %}
+
+{% block header %}
+<div style="position: absolute; right: 40px;">
+    {{current_user.name}}
+</div>
+<h1>Информация о сеансе</h1>
+<div style="position: absolute; right: 40px; top: 90px; ">
+    <a style="color: white; text-decoration: none;" href="/cinema">Главная страница</a>
+</div>
+{% endblock %}
+
+{% block main %}
+    <div style="text-decoration: none;
+                font-size: 20px;
+                color: deeppink;
+                font-weight: bold;">
+        Фильм: {{ session_data.movie }}<br>
+    Начало: {{ session_data.start_time }}<br>
+    Зал: {{ session_data.room_number }}<br></div>
+    <br>
+    {% if not is_past_session %}
+        {% if current_user.username == 'admin' %}
+            <h2>Панель администратора</h2>
+            <table>
+                <tr style="text-decoration: none;
+                            font-size: 20px;
+                            color: deeppink;
+                            font-weight: bold;">
+                    <th>Место</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for seat in seatss %}
+                    <tr >
+                        <td>{{ seat.seat_number }}</td>
+                        <td>
+                            {% if seat.reserved_by %}
+                                {% for user in users %}
+                                    {% if user.id == seat.reserved_by %}
+                                        Бронь на {{ user.name }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                Свободно
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if seat.reserved_by != None %}
+                                <form method="POST" action="/cinema/sessions/{{ session_id }}/unbooking">
+                                    <input type="hidden" name="is_unbook" value=" ">
+                                    <input type="hidden" name="seat_id" value="{{ seat.id }}">
+                                    <button style="background-color: white;" type="submit">Отменить бронь</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <table>
+                <tr style="text-decoration: none;
+                            font-size: 20px;
+                            color: deeppink;
+                            font-weight: bold;">
+                    <th>Место</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for seat in seatss %}
+                    <tr >
+                        <td>{{ seat.seat_number }}</td>
+                        <td>
+                            {% if seat.reserved_by %}
+                                {% for user in users %}
+                                    {% if user.id == seat.reserved_by %}
+                                        Бронь на {{ user.name }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                Свободно
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if seat.reserved_by == None %}
+                                <form method="POST" action="/cinema/sessions/{{ session_id }}/booking">
+                                    <input type="hidden" name="is_book" value="book">
+                                    <input type="hidden" name="seat_id" value="{{ seat.id }}">
+                                    <button style="background-color: white;"  type="submit">Забронировать</button>
+                                </form>
+                            {% elif seat.reserved_by == current_user.id %}
+                                <form method="POST" action="/cinema/sessions/{{ session_id }}/unbooking">
+                                    <input type="hidden" name="is_unbook" value=" ">
+                                    <input type="hidden" name="seat_id" value="{{ seat.id }}">
+                                    <button style="background-color: white;"  type="submit">Отменить бронь</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    {% else %}
+        {% if current_user.username == 'admin' %}
+            <h2>Панель администратора</h2>
+            <table>
+                <tr style="text-decoration: none;
+                            font-size: 20px;
+                            color: deeppink;
+                            font-weight: bold;">
+                    <th>Место</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for seat in seatss %}
+                    <tr>
+                        <td>{{ seat.seat_number }}</td>
+                        <td>
+                            {% if seat.reserved_by %}
+                                {% for user in users %}
+                                    {% if user.id == seat.reserved_by %}
+                                        Бронь на {{ user.name }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                Свободно
+                            {% endif %}
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <table>
+                <tr style="text-decoration: none;
+                            font-size: 20px;
+                            color: deeppink;
+                            font-weight: bold;">
+                    <th>Место</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for seat in seatss %}
+                    <tr>
+                        <td>{{ seat.seat_number }}</td>
+                        <td>
+                            {% if seat.reserved_by %}
+                                {% for user in users %}
+                                    {% if user.id == seat.reserved_by %}
+                                        Бронь на {{ user.name }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                Свободно
+                            {% endif %}
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    {% endif %}
+    <div style="margin-top: 50px;">
+        <a class="knopka"  href="/cinema/movieSessions/{{session_data.movie}}">Назад</a>
+    </div><br>
+{% endblock %}
+
+

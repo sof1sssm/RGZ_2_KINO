@@ -1,0 +1,28 @@
+{% extends "base_cinema.html" %}
+
+{% block header %}
+<div style="position: absolute; right: 40px;">
+    {{current_user.name}}
+</div>
+<h1>Добавить сеанс</h1>
+<div style="position: absolute; right: 40px; top: 90px; ">
+    <a style="color: white; text-decoration: none;" href="/cinema">Главная страница</a>
+</div>
+{% endblock %}
+
+
+{% block main %}
+<div style="text-align: center; color: red; ">{{error}}
+    {% for error in errors %}
+        {{ error }}
+    {% endfor %}
+</div>
+<div style="text-align: center;">
+    <form method="POST">
+        <div style="font-size: 20px; padding: 5px;"><input class="pole" name="title_movie" type="text" placeholder="Название фильма"></div>
+        <div style="font-size: 20px; padding: 5px;"><input class="pole" name="room_num" type="number" min="1" placeholder="Номер зала"></div>
+        <div style="font-size: 20px; padding: 5px;"><input class="pole" name="start_time" type="datetime-local" placeholder="Время начала сеанса"></div>
+        <button class="knopka" type="submit">Добавить сеанс</button>
+    </form>
+</div>
+{% endblock %}

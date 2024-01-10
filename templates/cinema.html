@@ -1,0 +1,47 @@
+{% extends "base_cinema.html" %}
+
+{% block header %}
+<h1>Кинотеатр "КиноDRIVE"</h1>
+{% endblock %}
+
+{% block main %}
+    
+    {% if name=='Anon' %}
+        <div style="text-align: center; margin-top: 100px;" >
+            <a class="glav" href="/cinema/login">Авторизация</a>
+            <a class="glav" href="/cinema/register">Регистрация</a>
+        </div>
+        <div style="text-align: center;margin-top: 50px;"><img width="80%" src="/static/carr.jpg"></div>
+        
+    {% elif current_user.username=='admin' %}  
+    <h2 style="color: deeppink; margin-top: 10px;">Вы вошли под правами администратора</h2>
+        <a class="knopka"  href="/cinema/addSessions" target="_self">Добавить сеанс</a><br>
+        <div style=" margin-top: 50px;">
+            <a class="knopka"   href="{{ url_for('allFilms') }}">Афиша</a>
+        </div>
+        <div style="text-align: center;margin-top: 50px;"><img width="80%" src="/static/carr.jpg"></div>
+        <div style="text-align: center; margin-top: 80px;">
+            <a class="glav" href="/cinema/logout" target="_self">Выход</a>
+        </div>
+
+    {% else %}
+        <h2 style="color: deeppink; margin-top: 10px;">Добро пожаловать {{name}}</h2>
+        <div style="margin-top: 50px; text-align: center;
+                    padding: 10px; 
+                    border: 4px solid black;
+                    border-right-style: none;
+                    border-left-style: none;
+                    padding-top: 30px;
+                    padding-bottom:30px ;">
+            <a class="knopka" style="border: 0;" href="{{ url_for('allFilms') }}">Афиша</a>
+        </div>
+        <div style="text-align: center;margin-top: 50px;"><img width="80%" src="/static/carr.jpg"></div>
+        <div style="text-align: center; margin-top: 90px;">
+            <a class="glav" href="/cinema/login" target="_self">Авторизация</a>
+            <a class="glav" href="/cinema/logout" target="_self">Выход</a>
+        </div>
+        <div style="text-align: center; margin-top:90px;">
+            <a class="knopka" href="/cinema/delete" target="_self">Удалить аккаунт</a>
+        </div>
+    {% endif %}
+{% endblock %}

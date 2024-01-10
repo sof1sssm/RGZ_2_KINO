@@ -1,0 +1,31 @@
+{% extends "base_cinema.html" %}
+
+{% block header %}
+<h1 style="text-align: center; ">Вход</h1>
+{% endblock %}
+
+{% block main %}
+
+    <h2 style="color: deeppink; ">Пожалуйста, авторизуйтесь</h2>
+    <div style="text-align: center; color: red; ">{{error}}
+        {% for error in errors %}
+            {{ error }}
+        {% endfor %}
+    </div>
+    <form method="post">
+        <div style="text-align: center; margin-top: 10px; margin-left: -70px;">
+            <label style="font-size: 20px;" for="username">Логин:</label>
+            <input class="pole" type="text" id="username" name="username" value="{{ username }}">
+        </div>
+        <div style="text-align: center; margin-top: 10px;">
+            <label style="font-size: 20px;" for="password">Пароль:</label>
+            <input class="pole" type="password" id="password" name="password" value="{{ password }}">
+        </div>
+        <div style="text-align: center;">
+            <button class="knopka" type="submit">Войти</button>
+            <button class="knopka" type="reset">Отмена</button>
+        </div>
+        <br>
+        <a class="knopka" href="/cinema/register">Регистрация</a>
+    </form>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base_cinema.html" %}
+
+{% block header %}
+<h1 style="text-align: center;">Страница регистрации</h1>
+{% endblock %}
+
+{% block main %}
+    <form method="POST" > 
+        <div style="text-align: center; margin-top: 10px;" >
+            <b><label class="pole" for="name">Имя</label> </b>
+            <br>               
+            <input class="pole" style="width: 200px; 
+                            outline: none; 
+                            border: 4px dashed  deeppink;" 
+                    type="text" name="name" placeholder="name" > 
+        </div>
+
+        <div style="text-align: center; margin-top: 10px;"  >
+            <b><label class="pole"  for="username">Логин</label> </b>
+            <br>               
+            <input class="pole" style="width: 200px; 
+                            outline: none; 
+                            border: 4px dashed  deeppink;" 
+                    type="text" name="username" placeholder="username" > 
+        </div>
+
+        <div style="text-align: center; margin-top: 10px;" >
+            <b><label class="pole"  for="password">Пароль</label></b>
+            <br> 
+            <input class="pole" style="width: 200px; 
+                            outline: none; 
+                            border: 4px dashed  deeppink;" 
+                type="text" name="password" placeholder="password"> 
+        </div>
+        
+        <div style="display: block; text-align: center;">
+            <button class="knopka" style="font-size: large;" type="submit"> 3арегистрироваться </button>
+        </div>
+        <div style="display: block; text-align: center; margin-top: 10px;">
+            {% for error in errors %}
+            <p class="error">{{ error }}</p>
+        {% endfor %}
+        </div>
+        
+    </form>
+
+{% endblock %}
