@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Телефоны</title>
+</head>
+<body>
+  <h1>Список телефонов</h1>
+  <div id="smartphones-container"> <!-- **DIV -->
+    <!-- Сюда будут вставлены товары -->
+  </div>
+
+  <script>
+    // Функция для получения товаров по категории
+    function fetchProductsByCategory(category) {
+      fetch('https://dummyjson.com/products')
+        .then(response => response.json())
+        .then(data => {
+          // Фильтрация товаров по категории "smartphones"
+          const smartphones = data.products.filter(product => product.category === category);
+          // Отображение товаров на странице
+          displayProducts(smartphones);
+        })
+        .catch(error => {
+          console.error('Error fetching products:', error);
+        });
+    }
+
+    // Функция для отображения товаров на странице
+    function displayProducts(products) {
+      const container = document.getElementById('smartphones-container');
+      container.innerHTML = ''; // Очищаем контейнер перед добавлением новых товаров
+
+      products.forEach(product => {
+        const productElement = document.createElement('div'); // Добавляем телефон в наш DIV *
+        productElement.innerHTML = `
+          <h2>${product.title}</h2> <!-- Название телефона -->>
+          <img src="${product.thumbnail}" alt="${product.title}" style="width:150px; height:auto;"> <!-- Картинка -->
+          <p>${product.description}</p> <!-- Описание товара -->
+          <p>Price: $${product.price}</p> <!-- Цена -->
+        `;
+        container.appendChild(productElement);
+      });
+    }
+
+    // Вызов функции при загрузке страницы
+    fetchProductsByCategory('smartphones');
+  </script>
+</body>
+</html>
